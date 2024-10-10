@@ -5,6 +5,9 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-void printData(char*);
+#include <string>
+using namespace std;
+
+void printData(string);
 
 #endif //MAIN_H
