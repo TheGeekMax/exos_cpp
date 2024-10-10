@@ -5,10 +5,13 @@
 #include "My_class.h"
 
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 void My_class::print_my_data() {
-    std::cout << string << std::endl;
+    std::cout << s << std::endl;
 }
 
-My_class::My_class(char* string_): string(string_) {}
+My_class::My_class(string s_): s(s_) {}
 

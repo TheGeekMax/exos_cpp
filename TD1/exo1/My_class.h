@@ -5,15 +5,17 @@
 #ifndef MY_CLASS_H
 #define MY_CLASS_H
 
+#include <string>
+using namespace std;
 
 
 class My_class {
 private:
-    char* string;
+    string s;
 
 public:
     void print_my_data();
-    My_class(char* string);
+    My_class(string s);
     virtual ~My_class() = default;
 };
 
