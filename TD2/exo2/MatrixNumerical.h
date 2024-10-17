@@ -7,6 +7,8 @@
 
 #include "MatrixBase.h"
 
+using namespace std;
+
 template<typename T>
 class MatrixNumerical : public MatrixBase<T> {
 public:
@@ -16,10 +18,10 @@ public:
     MatrixNumerical(size_t rows, size_t cols) : MatrixBase<T>(rows, cols) {}
     MatrixNumerical(const MatrixNumerical<T> &matrix) : MatrixBase<T>(matrix) {}
 
-    friend MatrixNumerical<T> operator+(const MatrixNumerical<T> &matrix1, const MatrixNumerical<T> &matrix2);
-    friend MatrixNumerical<T> operator-(const MatrixNumerical<T> &matrix1, const MatrixNumerical<T> &matrix2);
-    friend MatrixNumerical<T> operator*(const MatrixNumerical<T> &matrix1, const MatrixNumerical<T> &matrix2);
-    friend MatrixNumerical<T> operator*(const MatrixNumerical<T> &matrix, const T &scalar);
+    MatrixNumerical<T> operator+(const MatrixNumerical<T> &other) const;
+    MatrixNumerical<T> operator-(const MatrixNumerical<T> &other) const;
+    MatrixNumerical<T> operator*(const MatrixNumerical<T> &other) const;
+    MatrixNumerical<T> operator*(const T &scalar) const;
 };
 
 template<typename T>
@@ -60,4 +62,59 @@ T MatrixNumerical<T>::getDeterminant() {
     return determinant;
 }
 
+template<typename T>
+MatrixNumerical<T> MatrixNumerical<T>::operator+(const MatrixNumerical<T> &other) const{
+    if (this->rows != other.rows || this->cols != other.cols) {
+        throw std::invalid_argument("Matrices must have the same dimensions");
+    }
+    MatrixNumerical<T> result(this->rows, this->cols);
+    for (size_t i = 0; i < this->rows; i++) {
+        for (size_t j = 0; j < this->cols; j++) {
+            result.data[i][j] = this->data[i][j] + other.data[i][j];
+        }
+    }
+    return result;
+}
+
+template<typename T>
+MatrixNumerical<T> MatrixNumerical<T>::operator-(const MatrixNumerical<T> &other) const{
+    if (this->rows != other.rows || this->cols != other.cols) {
+        throw std::invalid_argument("Matrices must have the same dimensions");
+    }
+    MatrixNumerical<T> result(this->rows, this->cols);
+    for (size_t i = 0; i < this->rows; i++) {
+        for (size_t j = 0; j < this->cols; j++) {
+            result.data[i][j] = this->data[i][j] - other.data[i][j];
+        }
+    }
+    return result;
+}
+
+template<typename T>
+MatrixNumerical<T> MatrixNumerical<T>::operator*(const MatrixNumerical<T> &other) const{
+    if (this->cols != other.rows) {
+        throw std::invalid_argument("Matrix 1 cols must be equal to matrix 2 rows");
+    }
+    MatrixNumerical<T> result(this->rows, other.cols);
+    for (size_t i = 0; i < this->rows; i++) {
+        for (size_t j = 0; j < other.cols; j++) {
+            result.data[i][j] = 0;
+            for (size_t k = 0; k < this->cols; k++) {
+                result.data[i][j] += this->data[i][k] * other.data[k][j];
+            }
+        }
+    }
+    return result;
+}
+
+template<typename T>
+MatrixNumerical<T> MatrixNumerical<T>::operator*(const T &scalar) const{
+    MatrixNumerical<T> result(this->rows, this->cols);
+    for (size_t i = 0; i < this->rows; i++) {
+        for (size_t j = 0; j < this->cols; j++) {
+            result.data[i][j] = this->data[i][j] * scalar;
+        }
+    }
+    return result;
+}
 #endif //MATRIXNUMERICAL_H
