@@ -22,6 +22,11 @@ vector<int> twoSumBruteForce(const vector<int>& nums, int target ) {
 vector<int> twoSumOptimal(const vector<int> &nums, int target ) {
     // Votre code
     unordered_map<int,int> map;
+    //fill the map with the elements of the vector
+    for(int i = 0; i < nums.size(); i++) {
+        map[nums[i]] = i;
+    }
+
     for(int i = 0; i < nums.size(); i++) {
         int complement = target - nums[i];
         if(map.find(complement) != map.end()) {
