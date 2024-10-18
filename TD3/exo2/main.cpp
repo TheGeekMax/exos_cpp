@@ -34,6 +34,8 @@ vector<int> twoSumOptimal(const vector<int> &nums, int target ) {
         }
         map[nums[i]] = i;
     }
+
+    return {-1,-1};
 }
 
 int main() {
