@@ -39,12 +39,17 @@ private:
     vector<double> normalize(vector<double> to);
 public:
     TimeSeriesDataset(bool norm, bool trained);
-    void addTimeSeries(vector<double> timeSeries, int label);
+    void addTimeSeries(vector<double> timeSeries, int label = 0);
     tuple<vector<double>, int> getSample(int index);
 
     //statics methods for distance
     static double euclideanDistance(vector<double> a, vector<double> b);
     static double dtw(vector<double> a, vector<double> b);
+
+    //getters
+    int get_size();
+    int get_dim();
+    vector<double> get_ts(int index);
 };
 
 #endif //TSDATA_H

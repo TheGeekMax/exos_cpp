@@ -111,4 +111,20 @@ double TimeSeriesDataset::dtw(vector<double> a, vector<double> b) {
             dist[i][j] = distance + min(dist[i-1][j], min(dist[i][j-1], dist[i-1][j-1]));
         }
     }
+
+    //return the distance
+    return dist[n][n];
+}
+
+// getters
+int TimeSeriesDataset::get_size(){
+    return numberOfSamples;
+}
+
+int TimeSeriesDataset::get_dim(){
+    return maxLength;
+}
+
+vector<double> TimeSeriesDataset::get_ts(int index){
+    return data[index];
 }
